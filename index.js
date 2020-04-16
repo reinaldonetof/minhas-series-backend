@@ -6,6 +6,8 @@ const mongo = process.env.MONGODB || "mongodb://localhost/minhas-series";
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
+app.use(express.json())
+
 app.get("/", (req, res) => res.send("ok"));
 
 mongoose
