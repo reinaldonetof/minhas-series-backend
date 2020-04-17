@@ -4,6 +4,6 @@ const seriesController = require("../controllers/series");
 const router = express.Router();
 
 router.get("/", seriesController.index);
-router.get("/novo", seriesController.nova);
+router.get("/nova", seriesController.nova);
 
 module.exports = router;
