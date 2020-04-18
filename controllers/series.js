@@ -4,12 +4,11 @@ const index = ({ Serie }, req, res) => {
   });
 };
 const novaProcess = ({ Serie }, req, res) => {
-  const serie = new Serie({
-    name: "Dragon Ball",
-    status: "watched",
+  console.log(req.body);
+  const serie = new Serie(req.body);
+  serie.save(() => {
+    res.redirect("/series");
   });
-  serie.save(() => console.log("saved"));
-  res.render("series/nova");
 };
 
 const novaForm = (req, res) => {
