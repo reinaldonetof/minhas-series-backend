@@ -1,6 +1,12 @@
+const labels = [
+  { id: "to-watch", name: "Para assistir" },
+  { id: "watching", name: "Assistindo" },
+  { id: "watched", name: "Assistido" },
+];
+
 const index = ({ Serie }, req, res) => {
   Serie.find({}, (err, docs) => {
-    res.render("series/index", { series: docs });
+    res.render("series/index", { series: docs, labels });
   });
 };
 const novaProcess = ({ Serie }, req, res) => {
@@ -35,11 +41,6 @@ const editarProcess = ({ Serie }, req, res) => {
 };
 
 const editarForm = ({ Serie }, req, res) => {
-  const labels = [
-    { id: "to-watch", name: "Para assistir" },
-    { id: "watching", name: "Assistindo" },
-    { id: "watched", name: "Assistido" },
-  ];
   Serie.findOne({ _id: req.params.id }, (err, serie) => {
     res.render("series/editar", { serie, labels });
   });
