@@ -4,10 +4,9 @@ const labels = [
   { id: "watched", name: "Assistido" },
 ];
 
-const index = ({ Serie }, req, res) => {
-  Serie.find({}, (err, docs) => {
-    res.render("series/index", { series: docs, labels });
-  });
+const index = async ({ Serie }, req, res) => {
+  const docs = await Serie.find({});
+  res.render("series/index", { series: docs, labels });
 };
 const novaProcess = ({ Serie }, req, res) => {
   const serie = new Serie(req.body);
