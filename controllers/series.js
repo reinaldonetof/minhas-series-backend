@@ -26,15 +26,22 @@ const excluir = ({ Serie }, req, res) => {
 };
 
 const editarProcess = ({ Serie }, req, res) => {
-  const serie = new Serie(req.body);
-  serie.save(() => {
+  Serie.findOne({ _id: req.params.id }, (err, serie) => {
+    serie.name = req.body.name;
+    serie.status = req.body.status;
+    serie.save();
     res.redirect("/series");
   });
 };
 
 const editarForm = ({ Serie }, req, res) => {
+  const labels = [
+    { id: "to-watch", name: "Para assistir" },
+    { id: "watching", name: "Assistindo" },
+    { id: "watched", name: "Assistido" },
+  ];
   Serie.findOne({ _id: req.params.id }, (err, serie) => {
-    res.render("series/editar", { serie });
+    res.render("series/editar", { serie, labels });
   });
 };
 

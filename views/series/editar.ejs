@@ -15,6 +15,7 @@
               placeholder="Informe o nome da série"
               aria-describedby="nameHelp"
               id="exampleName"
+              value="<%= serie.name %>"
             />
             <small id="nameHelp" class="form-text text-muted"
               >Nome da série a ser salva</small
@@ -24,9 +25,10 @@
           <div class="form-group">
             <label for="status">Situação:</label>
             <select name="status" class="form-control" id="status">
-              <option value="to-watch">Para assistir</option>
-              <option value="watching">Assistindo</option>
-              <option value="watched">Assistido</option>
+              <% labels.forEach( label => { %> 
+              <option value="<%= label.id%>" <% if(label.id === serie.status)
+                { %> selected="selected" <%} %> ><%= label.name%></option>
+              <% }) %>
             </select>
           </div>
 
