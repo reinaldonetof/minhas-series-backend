@@ -6,10 +6,10 @@ const labels = [
 
 const pagination = async (model, conditions, params) => {
   const total = await model.countDocuments(conditions);
-  const pageSize = params.pageSize || 20;
-  const currentPage = params.page || 0;
-  let pages = parseInt(total) / parseInt(pageSize);
-  if (!Number.isInteger(pages)) pages = pages + 1;
+  const pageSize = parseInt(params.pageSize) || 20;
+  const currentPage = parseInt(params.page) || 0;
+  let pages = parseInt(total) / pageSize;
+  if (!Number.isInteger(pages)) pages = parseInt(pages) + 1;
 
   const pagination = {
     currentPage,
@@ -17,7 +17,10 @@ const pagination = async (model, conditions, params) => {
     pages,
   };
 
-  const results = await model.find(conditions);
+  const results = await model
+    .find(conditions)
+    .skip(currentPage * pageSize)
+    .limit(pageSize);
 
   return {
     data: results,
