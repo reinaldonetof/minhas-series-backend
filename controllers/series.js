@@ -4,9 +4,30 @@ const labels = [
   { id: "watched", name: "Assistido" },
 ];
 
+const pagination = async (model, conditions, params) => {
+  const total = await model.countDocuments(conditions);
+  const pageSize = params.pageSize || 20;
+  const currentPage = params.page || 0;
+  let pages = parseInt(total) / parseInt(pageSize);
+  if (!Number.isInteger(pages)) pages = pages + 1;
+
+  const pagination = {
+    currentPage,
+    pageSize,
+    pages,
+  };
+
+  const results = await model.find(conditions);
+
+  return {
+    data: results,
+    pagination,
+  };
+};
+
 const index = async ({ Serie }, req, res) => {
-  const docs = await Serie.find({});
-  res.render("series/index", { series: docs, labels });
+  const results = await pagination(Serie, {}, req.query);
+  res.render("series/index", { results, labels });
 };
 const novaProcess = async ({ Serie }, req, res) => {
   const serie = new Serie(req.body);
